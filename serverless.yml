@@ -1,0 +1,22 @@
+service: lambda-for-google-assistant
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+     - http:
+         path: hello
+         method: get
+  fulfillment:
+    handler: dialogflow.fulfillment
+    events:
+      - http:
+          path: fulfillment
+          method: post
+
+plugins:
+  - serverless-offline
