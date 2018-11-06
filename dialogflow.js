@@ -6,7 +6,7 @@ app.intent('next_appointment', conv => {
   conv.ask('your next appointment is cominmg up')
 })
 
-app.intent('demo_action', conv => {
+app.intent('next-job-intent', conv => {
   console.log("conv.parameters: ", conv.parameters)  
   conv.ask('your test app is running kevin')
 })
