@@ -1,10 +1,33 @@
 'use strict';
+var https = require('https')
 
-module.exports.hello = async (event, context) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'TEST WORKED!',
-    }),
-  };
-};
+new Promise((resolve, reject) => {
+    const options = {
+        host: 'wfm-api-dev.dispatch.me',
+        // path: '/v3/search/jobs?organization_id[]=11827&status[]=scheduled',
+        path: '/v3/jobs/32566',
+        headers: {
+          'Authorization':'Bearer f31a194d6183e0e1a4f04953b27cb939d73d7637521ac21760e3ff148153dc02'
+        },
+        method: 'GET'
+    }
+
+    const req = https.request(options, (res) => {
+      // console.log("success! data is: ", res)      
+      res.on('data', (d) => {
+        // process.stdout.write(d);
+        resolve(d);      
+      });
+      
+    });    
+
+    req.on('error', (e) => {
+      reject(e.message);
+    }); 
+
+    // send the request
+    req.write('');
+    req.end();
+  }).then(res => {
+    console.log(JSON.parse(res.toString())); 
+  });
